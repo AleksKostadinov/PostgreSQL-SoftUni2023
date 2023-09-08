@@ -4,4 +4,7 @@ department_id = 2
 OR
 department_id = 1;
 
+DELETE FROM employees
+WHERE department_id IN (2, 1);
+
 SELECT * FROM employees ORDER BY id;
