@@ -9,13 +9,16 @@ CREATE TABLE customers(
     birthday DATE,
     city_id INT,
     CONSTRAINT fk_customers_cities
-    Foreign Key (city_id) REFERENCES cities(id)
+    FOREIGN KEY (city_id) REFERENCES cities(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     customer_id INT,
-    CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES customers(id)
+    CONSTRAINT fk_orders_customers
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE item_types(
@@ -27,8 +30,9 @@ CREATE TABLE items(
     id SERIAL PRIMARY KEY,
     item_name VARCHAR(50),
     item_type_id INT,
-    CONSTRAINT fk_items_types
-    Foreign Key (item_type_id) REFERENCES item_types(id)
+    CONSTRAINT fk_items_item_types
+    FOREIGN KEY (item_type_id) REFERENCES item_types(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE order_items (
@@ -36,6 +40,10 @@ CREATE TABLE order_items (
     item_id INT,
     CONSTRAINT pk
     PRIMARY KEY(order_id, item_id),
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id),
-    CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES items(id)
+    CONSTRAINT fk_order_items_orders
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+    ON DELETE CASCADE,
+    CONSTRAINT fk_order_items_items
+    FOREIGN KEY (item_id) REFERENCES items(id)
+    ON DELETE CASCADE
 );
