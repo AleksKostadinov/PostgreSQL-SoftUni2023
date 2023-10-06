@@ -5,15 +5,16 @@ CREATE TABLE notification_emails(
 	body TEXT
 );
 
-CREATE FUNCTION trigger_fn_send_email_on_balance_change()
-	RETURNS TRIGGER
-	LANGUAGE plpgsql
+CREATE FUNCTION
+	trigger_fn_send_email_on_balance_change()
+RETURNS TRIGGER
+LANGUAGE plpgsql
 AS $$
 BEGIN
 	INSERT INTO notification_emails(
 		recipient_id,
-		subject,
-		body
+		"subject",
+		"body"
 	)
 	VALUES(
 		NEW.account_id,
@@ -26,9 +27,8 @@ $$;
 
 
 CREATE TRIGGER tr_send_email_on_balance_change
-	AFTER UPDATE
-	ON logs
-	FOR EACH ROW
-	EXECUTE FUNCTION
-		trigger_fn_send_email_on_balance_change();
-        
+AFTER UPDATE
+ON logs
+FOR EACH ROW
+EXECUTE FUNCTION
+	trigger_fn_send_email_on_balance_change();
