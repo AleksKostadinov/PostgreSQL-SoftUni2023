@@ -45,3 +45,58 @@ BEGIN
 END;
 $$;
 
+-- Var.3
+CREATE OR REPLACE
+PROCEDURE
+	sp_animals_with_owners_or_not(
+		IN animal_name VARCHAR(30),
+		OUT name_of_owner VARCHAR(30)
+	)
+AS $$
+BEGIN
+		SELECT
+			o.name
+		INTO
+			name_of_owner
+		FROM
+					animals a
+		LEFT JOIN owners o
+				ON
+					o.id = a.owner_id
+		WHERE
+					a.name = animal_name;
+
+		IF name_of_owner IS NULL THEN
+				name_of_owner := 'For adoption';
+		END IF;
+END;
+
+$$ LANGUAGE plpgsql;
+
+
+-- Var. 4
+
+CREATE OR REPLACE
+PROCEDURE
+	sp_animals_with_owners_or_not(
+		IN animal_name VARCHAR(30),
+		OUT name_of_owner VARCHAR(30)
+	)
+AS $$
+BEGIN
+		SELECT
+			CASE
+				WHEN o.name IS NULL THEN 'For adoption'
+				ELSE o.name
+			END
+		INTO
+			name_of_owner
+		FROM
+			animals a
+		LEFT JOIN owners o
+		ON
+			o.id = a.owner_id
+		WHERE
+			a.name = animal_name;
+END;
+$$ LANGUAGE plpgsql;

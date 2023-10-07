@@ -19,3 +19,25 @@ $$ LANGUAGE plpgsql;
 SELECT fn_get_volunteers_count_from_department('Education program assistant');
 SELECT fn_get_volunteers_count_from_department('Guest engagement');
 SELECT fn_get_volunteers_count_from_department('Zoo events');
+
+-- CREATE OR REPLACE FUNCTION
+-- 	fn_get_volunteers_count_from_department(
+-- 		IN searched_volunteers_department varchar(30)
+-- 		)
+-- RETURNS INT
+-- AS $$
+-- BEGIN
+-- 	RETURN (
+-- 		SELECT
+-- 			count(*)
+-- 		FROM
+-- 			volunteers v
+-- 		JOIN volunteers_departments vd
+-- 			ON
+-- 			v.department_id = vd.id
+-- 		WHERE
+-- 			department_name = searched_volunteers_department
+-- 		);
+-- END;
+
+-- $$ LANGUAGE plpgsql;
