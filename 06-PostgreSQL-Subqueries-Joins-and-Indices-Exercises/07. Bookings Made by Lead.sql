@@ -10,4 +10,3 @@ ON
 	b.customer_id = c.customer_id
 WHERE
 	c.job_type = 'Lead';
-    

@@ -8,20 +8,20 @@ DECLARE
 BEGIN
 	SELECT
 	COUNT(employee_id)
-INTO
-	count_employees
-FROM
-	employees e
-JOIN addresses a
-	ON
-	a.address_id = e.address_id
-JOIN towns t
-	ON
-	t.town_id = a.town_id
-WHERE
-	t.name = town_name;
+	INTO
+		count_employees
+	FROM
+		employees e
+	JOIN addresses a
+		ON
+		a.address_id = e.address_id
+	JOIN towns t
+		ON
+		t.town_id = a.town_id
+	WHERE
+		t.name = town_name;
 
-RETURN count_employees;
+	RETURN count_employees;
 END;
 
 $$ LANGUAGE plpgsql;

@@ -9,7 +9,7 @@ CREATE TABLE
         salary NUMERIC(19, 4)
     );
 
-CREATE FUNCTION TRIGGER_FN_ON_EMPLOYEE_DELETE()
+CREATE FUNCTION trigger_fn_on_employee_delete()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
@@ -24,24 +24,26 @@ BEGIN
 	        salary
 	    )
 	VALUES
-	(
-	        OLD.first_name,
-	        OLD.last_name,
-	        OLD.middle_name,
-	        OLD.job_title,
-	        OLD.department_id,
-	        OLD.salary
-	    );
+		(
+			OLD.first_name,
+			OLD.last_name,
+			OLD.middle_name,
+			OLD.job_title,
+			OLD.department_id,
+			OLD.salary
+		);
 	RETURN OLD;
 END;
 $$;
 
 
-CREATE TRIGGER TR_DELETED_EMPLOYEES
-	tr_deleted_employees AFTER
-	DELETE ON employees FOR EACH ROW
-	EXECUTE
-	    FUNCTION trigger_fn_on_employee_delete();
+CREATE TRIGGER tr_deleted_employees
+AFTER DELETE
+ON employees
+FOR EACH ROW
+EXECUTE
+FUNCTION trigger_fn_on_employee_delete();
 
 
-DELETE FROM employees WHERE employee_id IN (1);
+DELETE FROM employees
+WHERE employee_id IN (1);
